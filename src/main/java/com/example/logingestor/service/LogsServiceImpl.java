@@ -1,24 +1,20 @@
 package com.example.logingestor.service;
 
 import com.example.logingestor.entity.Log;
+import com.example.logingestor.models.Metadata;
 import com.example.logingestor.models.request.Query;
 import com.example.logingestor.repo.LogsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Set;
 
 @Service
-public class LogsServiceImpl implements LogsService{
+public class LogsServiceImpl implements LogsService {
     private final LogsRepo logsRepo;
+
     @Autowired
     public LogsServiceImpl(LogsRepo logsRepo) {
         this.logsRepo = logsRepo;
-    }
-
-    public List<Log> getAllLogs() {
-        return logsRepo.findAll(); // Fetch all logs from the database
     }
 
     @Override
@@ -28,7 +24,7 @@ public class LogsServiceImpl implements LogsService{
 
     @Override
     public List<Log> getLogs(Query query) {
-        if (query != null) {
+        if (!(query.equals(new Query(null, null, null, null, null, null, null, new Metadata(null)))))
             return logsRepo.findByFilters(
                     query.getLevel(),
                     query.getMessage(),
@@ -39,8 +35,8 @@ public class LogsServiceImpl implements LogsService{
                     query.getCommit(),
                     query.getMetadata().getParentResourceId()
             );
-        } else {
-            return getAllLogs(); // Return all logs if no filters are provided
+        else {
+            return logsRepo.findAll(); // Return all logs if no filters are provided
         }
     }
 }

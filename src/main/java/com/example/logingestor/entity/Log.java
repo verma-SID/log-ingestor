@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @Document(collection = "logs")
 @NoArgsConstructor
-public class Log{
+public class Log {
     private String level;
     private String message;
     private String resourceId;

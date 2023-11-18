@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ApiResponse {
-    private boolean success=true;
+    private boolean success = true;
     private Object data;
 }

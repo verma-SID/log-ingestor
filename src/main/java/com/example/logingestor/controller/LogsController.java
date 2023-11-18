@@ -16,13 +16,15 @@ import java.util.List;
 @RequestMapping("api/logsIngestor")
 public class LogsController {
     private final LogsService logsService;
+
     @Autowired
     public LogsController(LogsService logsService) {
         this.logsService = logsService;
     }
+
     @PostMapping("/saveLog")
-    public ResponseEntity<ApiResponse> saveLog(@RequestBody Log log){
-        ApiResponse apiResponse=new ApiResponse();
+    public ResponseEntity<ApiResponse> saveLog(@RequestBody Log log) {
+        ApiResponse apiResponse = new ApiResponse();
         apiResponse.setData(logsService.saveLog(log));
         return ResponseEntity.ok(apiResponse);
     }
