@@ -17,6 +17,10 @@ public class LogsServiceImpl implements LogsService{
         this.logsRepo = logsRepo;
     }
 
+    public List<Log> getAllLogs() {
+        return logsRepo.findAll(); // Fetch all logs from the database
+    }
+
     @Override
     public Log saveLog(Log log) {
         return logsRepo.save(log);
@@ -24,9 +28,19 @@ public class LogsServiceImpl implements LogsService{
 
     @Override
     public List<Log> getLogs(Query query) {
-        if(query.getLevel()!=null){
-            return logsRepo.findByLevel(query.getLevel());
+        if (query != null) {
+            return logsRepo.findByFilters(
+                    query.getLevel(),
+                    query.getMessage(),
+                    query.getResourceId(),
+                    query.getTimestamp(),
+                    query.getTraceId(),
+                    query.getSpanId(),
+                    query.getCommit(),
+                    query.getMetadata().getParentResourceId()
+            );
+        } else {
+            return getAllLogs(); // Return all logs if no filters are provided
         }
-        return null;
     }
 }
